@@ -5,6 +5,7 @@ import gui
 
 # Environment Grid - None is wall, otherwise its reward value for each state
 GRID = [
+    [-0.04, -0.001, -0.001, -0.001],
     [-0.04, -0.001, -0.001, +1],
     [-0.04, None, -0.001, -1],
     [-0.04, -0.001, -0.001, -0.001],
@@ -30,7 +31,7 @@ TRANSITION_MODEL = {
 env = mdp.environment(grid=GRID, terminals=TERMINALS, transition_model=TRANSITION_MODEL, gamma=GAMMA)
 
 # Run value iteration on mdp environment
-U, data = mdp.value_iteration(env, 0.01)
+U, data = mdp.value_iteration(env, epsilon=EPSILON)
 
 # Get best policy of mdp environment with some utility U 
 pi = mdp.best_policy(env, U)
@@ -39,8 +40,9 @@ pi = mdp.best_policy(env, U)
 pi2 = mdp.policy_iteration(env)
 
 # Draw GUI
-gui.draw(env, pi, U, data=data)
-gui.draw(env, pi2, U, data=data)
+gui.draw(env, pi, U=U, data=data)
+#gui.draw(env, pi2)
 
 ##########################################################################################
 
+pi = mdp.best_policy(env, U)
